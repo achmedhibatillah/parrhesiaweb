@@ -1,7 +1,7 @@
 import { useState } from "react";
 import InputText from "./input-text";
 
-export default function InputPasswordAuth({ name, id, placeholder, value, onChange, icon }) {
+export default function InputPasswordAuth({ name, id, placeholder, value, onChange, icon, disabled }) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -14,6 +14,7 @@ export default function InputPasswordAuth({ name, id, placeholder, value, onChan
         value={value}
         onChange={onChange}
         className="ps-8 pe-10"
+        disabled={disabled}
       />
       <i className={`absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 fas fa-${icon}`}></i>
       <button

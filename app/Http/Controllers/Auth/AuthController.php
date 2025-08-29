@@ -79,6 +79,38 @@ class AuthController extends Controller
             'created_at' => $userregistration->created_at
         ]);
     }
+
+    public function login_process(Request $request)
+    {
+        $request->validate([
+            'user_email' => 'required',
+            'user_pass' => 'required'
+        ]);
+
+        if (!User::where('user_email', $request->user_email)->exists()) {
+            return response()->json([
+                'status' => 'error'
+            ]);
+        }
+
+        $user = User::where('user_email', $request->user_email)->first();
+
+        if (Hash::check($request->user_pass, $user->user_pass)) {
+            session([
+                'sss' => 'usr',
+                'usr' => $user->user_id,
+                'acs' => $user->role_id
+            ]);
+
+            return response()->json([
+                'status' => 'success'
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error'
+        ]);
+    }
  
     public function register_otp(Request $request)
     {
