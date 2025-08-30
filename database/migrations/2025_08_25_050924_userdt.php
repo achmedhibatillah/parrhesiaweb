@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('userdt', function (Blueprint $table) {
-            $table->uuid('user_id')->unique();
+            $table->uuid('user_id')->primary();
             $table->string('user_phone', 30)->nullable();
             $table->string('userdt_headline', 300)->nullable();
             $table->longText('userdt_description')->nullable();
@@ -30,9 +30,9 @@ return new class extends Migration
             $table->uuid('userdt_pp')->nullable();
             $table->uuid('userdt_bg')->nullable();
 
-            $table->foreign('user_id')->references('user_id')->on('user');
-            $table->foreign('userdt_pp')->references('imageupload_id')->on('imageupload');
-            $table->foreign('userdt_bg')->references('imageupload_id')->on('imageupload');
+            // $table->foreign('user_id')->references('user_id')->on('user');
+            // $table->foreign('userdt_pp')->references('imageupload_id')->on('imageupload');
+            // $table->foreign('userdt_bg')->references('imageupload_id')->on('imageupload');
         });
     }
 

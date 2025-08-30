@@ -250,7 +250,6 @@ export default function Login() {
         setLoadingIdentity(false);
   
         if (data.status === "success") {
-          // tampilkan centang sukses
           setShowSuccess(true);
   
           setTimeout(() => {

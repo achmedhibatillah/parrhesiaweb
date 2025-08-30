@@ -15,6 +15,3 @@ Route::middleware('guest')->group(function () {
 
     Route::post('register-check-username', [AuthController::class, 'register_check_username']);
 });
-
-Route::middleware('auth')->group(function () {
-});

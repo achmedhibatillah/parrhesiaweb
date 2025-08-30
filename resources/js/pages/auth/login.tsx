@@ -7,6 +7,7 @@ import InputTextAuth from "@/components/input-text-auth"
 import InputPasswordAuth from "@/components/input-password-auth"
 import Button from "@/components/button"
 import InputError from "@/components/input-error"
+import InputCheckboxOne from "@/components/input-checkbox-one"
 
 export default function Login({ email = '' }) {
   const [responseLogin, setResponseLogin] = useState<{ type: string; text: string } | null>(null)
@@ -17,12 +18,14 @@ export default function Login({ email = '' }) {
     initialValues: {
       user_email: email,
       user_pass: "",
+      login_keepsession: false
     },
     validationSchema: Yup.object({
       user_email: Yup.string()
         .required("bagian ini wajib diisi"),
       user_pass: Yup.string()
         .required("bagian ini wajib diisi"),
+      login_keepsession: Yup.boolean()
     }),
     onSubmit: async (values) => {
       setLoadingLogin(true)
@@ -35,7 +38,7 @@ export default function Login({ email = '' }) {
             setResponseLogin({ type: "success", text: "Autentikasi berhasil." })
             setShowSuccess(true)
             setTimeout(() => {
-              window.location.href = "/dashboard"
+              window.location.href = "/portal"
             }, 5000);
             break 
           case "error":
@@ -100,6 +103,16 @@ export default function Login({ email = '' }) {
                 {formik.errors.user_pass && formik.touched.user_pass && (
                   <InputError>{formik.errors.user_pass}</InputError>
                 )}
+            </div>
+            <div className="mb-3">
+              <InputCheckboxOne
+                id="login_keepsession"
+                name="login_keepsession"
+                checked={formik.values.login_keepsession} 
+                onChange={formik.handleChange}
+                disabled={loadingLogin || showSuccess}
+                label="Pertahankan sesi login"
+              />
             </div>
             <Button disabled={loadingLogin || showSuccess}  className="py-2 bg-blue-200 hover:bg-blue-300 border-gray-800 w-[100%] mt-3 shadow-sm/20" type="submit">
                 {(loadingLogin || showSuccess) ? 'Loading...' : 'Submit'}

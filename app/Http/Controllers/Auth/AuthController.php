@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use App\Mail\RegistrationOtpMail;
 use App\Models\User;
+use App\Models\UserDt;
 use App\Models\UserRegistration;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -84,33 +85,39 @@ class AuthController extends Controller
     {
         $request->validate([
             'user_email' => 'required',
-            'user_pass' => 'required'
+            'user_pass'  => 'required'
         ]);
-
-        if (!User::where('user_email', $request->user_email)->exists()) {
-            return response()->json([
-                'status' => 'error'
-            ]);
-        }
-
+    
         $user = User::where('user_email', $request->user_email)->first();
-
-        if (Hash::check($request->user_pass, $user->user_pass)) {
-            session([
-                'sss' => 'usr',
-                'usr' => $user->user_id,
-                'acs' => $user->role_id
-            ]);
-
-            return response()->json([
-                'status' => 'success'
-            ]);
+    
+        if (!$user) {
+            return response()->json(['status' => 'error']);
         }
-
-        return response()->json([
-            'status' => 'error'
-        ]);
-    }
+    
+        if (Hash::check($request->user_pass, $user->user_pass)) {
+            // simpan data session
+            session([
+                'sss' => [
+                    'usr' => $user->user_id,
+                    'acs' => $user->role_id
+                ]
+            ]);
+    
+            // cek login_keepsession
+            if ($request->boolean('login_keepsession')) {
+                // kalau keep session = true, extend lifetime
+                // contoh: 30 hari
+                config(['session.lifetime' => 60 * 24 * 30]);
+            } else {
+                // kalau tidak, pakai default lifetime dari config/session.php
+                config(['session.lifetime' => config('session.lifetime')]);
+            }
+    
+            return response()->json(['status' => 'success']);
+        }
+    
+        return response()->json(['status' => 'error']);
+    }    
  
     public function register_otp(Request $request)
     {
@@ -244,6 +251,10 @@ class AuthController extends Controller
             'user_fullname' => $request->user_fullname,
             'user_pass' => Hash::make($request->user_password),
             'role_id' => 'guest-user'
+        ]);
+
+        UserDt::create([
+            'user_id' => $user_id
         ]);
 
         UserRegistration::where('userregistration_email', $request->user_email)->delete();

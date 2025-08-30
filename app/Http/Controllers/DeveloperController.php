@@ -6,8 +6,14 @@ use Illuminate\Http\Request;
 
 class DeveloperController extends Controller
 {
-    public function get_session()
+    public function session_get()
     {
+        return session()->all();
+    }
+
+    public function session_flush()
+    {
+        session()->flush();
         return session()->all();
     }
 }

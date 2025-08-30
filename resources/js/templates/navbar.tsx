@@ -45,7 +45,7 @@ export default function Navbar({ page, className }) {
         {
             title: 'Survei',
             page: 'survei',
-            icon: 'poll',
+            icon: 'clipboard',
             url: 'survei'
         },
         {
