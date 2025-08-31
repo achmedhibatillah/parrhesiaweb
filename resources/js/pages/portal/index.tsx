@@ -1,8 +1,8 @@
 import PortalLayout from "@/layouts/portal-layout"
 
-export default function PortalIndex({ userdata }) {
+export default function PortalIndex({ userdata, pagenow }) {
     return (
-        <PortalLayout userdata={userdata}>
+        <PortalLayout userdata={userdata} pagenow={pagenow}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit quis quas ea quod illum sequi reiciendis, quasi iure minima rerum debitis doloremque aut cum quia voluptatem sunt iste, voluptate sint?
             Voluptatum eligendi dicta ullam, esse architecto similique corporis facere quos. Voluptatum blanditiis rem aspernatur rerum sapiente quidem a deleniti maxime sunt. Doloribus accusamus quam quidem expedita! Autem ullam velit harum.
             Quia dignissimos eligendi reiciendis perferendis eius accusantium laudantium officia est error qui odit dolore beatae provident quidem, libero ratione consequatur iste alias quis! Saepe itaque delectus, possimus praesentium placeat qui.

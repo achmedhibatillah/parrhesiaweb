@@ -27,6 +27,7 @@ class PortalController extends Controller
     public function index()
     {
         return Inertia::render('portal/index', [
+            'pagenow' => 'general',
             'userdata' => $this->userdata
         ]);
     }

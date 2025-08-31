@@ -20,8 +20,12 @@ return new class extends Migration
 
         DB::table('role')->insert([
             [
+                'role_id' => 'member-user',
+                'role_name' => 'Member User'
+            ],
+            [
                 'role_id' => 'guest-user',
-                'role_name' => 'Guest Name'
+                'role_name' => 'Guest User'
             ],
             [
                 'role_id' => 'trash-data',

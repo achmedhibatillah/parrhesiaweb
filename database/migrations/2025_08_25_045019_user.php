@@ -41,7 +41,15 @@ return new class extends Migration
                 'user_fullname' => 'Verified Users Trash Data',
                 'user_pass' => 'no-password',
                 'role_id' => 'trash-data'
-            ]
+            ],
+            [
+                'user_id' => '4c63fd3d-aa1a-4f78-9ebc-e8c70aeec914',
+                'user_email' => 'contact@achmedhibatillah.com',
+                'user_username' => 'achmedhibatillah',
+                'user_fullname' => 'Achmed Hibatillah',
+                'user_pass' => '$2y$12$lEmtCGn0C5w3r3nVFx/S4O96chd3NBYrYV85BqUQM.5ediO0S8KJ.',
+                'role_id' => 'member-user'
+            ],
         ]);
     }
 
