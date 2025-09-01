@@ -14,12 +14,9 @@ return new class extends Migration
         Schema::create('fileupload', function (Blueprint $table) {
             $table->uuid('fileupload_id')->primary();
             $table->uuid('fileupload_path')->unique();
-            $table->string('fileupload_title', 120);
-            $table->string('uploadaccess_label');
+            $table->string('fileupload_description', 120);
+            $table->string('fileupload_access');
             $table->uuid('user_id');
-
-            $table->foreign('uploadaccess_label')->references('uploadaccess_label')->on('uploadaccess');
-            $table->foreign('user_id')->references('user_id')->on('user');
         });
     }
 

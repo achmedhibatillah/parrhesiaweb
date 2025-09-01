@@ -20,9 +20,15 @@ function ATag({ link, target, children, style, onClick, disabled }: any) {
   );
 }
 
-function ButtonTag({ type = 'button', children, style, onClick, disabled }: any) {
+function ButtonTag({ type = 'button', children, style, onClick, disabled, onMouseDown }: any) {
   return (
-    <button type={type} className={style} onClick={onClick} disabled={disabled}>
+    <button
+      type={type}
+      className={style}
+      onClick={onClick}
+      onMouseDown={onMouseDown}
+      disabled={disabled}
+    >
       {children}
     </button>
   );
@@ -37,6 +43,7 @@ export default function Button({
   children,
   onClick,
   disabled = false,
+  onMouseDown
 }: any) {
   const baseStyle =
     'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors duration-300 ease-in-out px-3 py-1';
@@ -51,7 +58,7 @@ export default function Button({
   }
 
   return (
-    <ButtonTag type={type} style={`${finalStyle} ${disabled ? 'bg-gray-300 hover:bg-gray-300' : '' }`} onClick={onClick} disabled={disabled}>
+    <ButtonTag type={type} style={`${finalStyle} ${disabled ? 'bg-gray-300 hover:bg-gray-300' : '' }`} onClick={onClick} disabled={disabled} onMouseDown={onMouseDown}>
       {children}
     </ButtonTag>
   );

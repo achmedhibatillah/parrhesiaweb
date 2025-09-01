@@ -28,8 +28,6 @@ export default function PortalLayout({ userdata, pagenow, children }) {
   
     const handleSidebar = () => setHideSidebar(!hideSidebar)
     
-    console.log(hideSidebar)
-
     return (
         <div>
             <div className="bg-amber-900 fixed w-[100%]">
@@ -50,7 +48,7 @@ export default function PortalLayout({ userdata, pagenow, children }) {
                 <div className="flex w-full overflow-hidden">
                     
                     {/* Sidebar kiri */}
-                    <div className="fixed md:static">
+                    <div className="fixed md:static z-10">
                         <div className={`transition-all duration-300 ease-in-out ${hideSidebar ? 'w-0' : 'w-[158%] -mt-1 -ms-3 md:ms-0 md:mt-0 md:w-60'} h-[100vh] md:h-auto bg-amber-50 md:bg-white overflow-hidden`}>
                             <div className="sticky top-0 flex flex-col justify-between pt-1">
                                 <Sidebar userdata={userdata} pagenow={pagenow} />
@@ -63,7 +61,7 @@ export default function PortalLayout({ userdata, pagenow, children }) {
                     </div>
 
                     {/* Konten utama */}
-                    <div className="flex-1 transition-all duration-300 ease-in-out -mt-10 px-3 shadow-sm shadow-gray-400 pt-11 pb-3 overflow-auto  max-h-[100vh]">
+                    <div className="flex-1 transition-all duration-300 ease-in-out -mt-10 px-3 shadow-sm shadow-gray-400 pt-11 pb-3 overflow-auto  max-h-[100vh] relative z-0">
                         <div className="">
                         {   children}
                         </div>
@@ -100,11 +98,11 @@ export default function PortalLayout({ userdata, pagenow, children }) {
                             <div className="bg-amber-50 shadow rounded-xl overflow-hidden mt-3 p-3">
                                 <div className="grid grid-cols-2">
                                     <div className="flex flex-col justify-center text-center">
-                                        <p className="font-bold text-xl text-gray-700">5</p>
+                                        <p className="font-bold text-xl text-gray-700">{userdata.post_count}</p>
                                         <p className="text-gray-400">Publikasi</p>
                                     </div>
                                     <div className="flex flex-col justify-center text-center">
-                                        <p className="font-bold text-xl text-gray-700">10 rb</p>
+                                        <p className="font-bold text-xl text-gray-700">{userdata.score_rate}</p>
                                         <p className="text-gray-400">Apresiasi</p>
                                     </div>
                                 </div>

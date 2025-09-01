@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -34,6 +35,12 @@ return new class extends Migration
             // $table->foreign('userdt_pp')->references('imageupload_id')->on('imageupload');
             // $table->foreign('userdt_bg')->references('imageupload_id')->on('imageupload');
         });
+
+        DB::table('userdt')->insert([
+            [
+                'user_id' => '4c63fd3d-aa1a-4f78-9ebc-e8c70aeec914',
+            ]
+        ]);
     }
 
     /**

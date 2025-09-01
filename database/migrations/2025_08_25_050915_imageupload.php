@@ -13,13 +13,10 @@ return new class extends Migration
     {
         Schema::create('imageupload', function (Blueprint $table) {
             $table->uuid('imageupload_id')->primary();
-            $table->uuid('imageupload_path')->unique();
-            $table->string('imageupload_title', 120)->nullable();
-            $table->string('uploadaccess_label');
+            $table->string('imageupload_path', 100)->unique();
+            $table->string('imageupload_description', 120)->nullable();
+            $table->string('imageupload_access');
             $table->uuid('user_id');
-
-            $table->foreign('uploadaccess_label')->references('uploadaccess_label')->on('uploadaccess');
-            $table->foreign('user_id')->references('user_id')->on('user');
         });
     }
 

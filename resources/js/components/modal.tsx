@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 interface ModalProps {
   isOpen: boolean;
@@ -18,22 +19,22 @@ export default function Modal({ isOpen, onClose, title, children, footer }: Moda
       setAnimateClass("animate-pop-in");
     } else if (show) {
       setAnimateClass("animate-pop-out");
-      const timer = setTimeout(() => setShow(false), 300); // durasi keluar
+      const timer = setTimeout(() => setShow(false), 300);
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
 
   if (!show) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+  return createPortal(
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center">
       {/* Overlay */}
       <div
         className={`absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300 ${
           isOpen ? "opacity-100" : "opacity-0"
         }`}
         onClick={onClose}
-      ></div>
+      />
 
       {/* Modal content */}
       <div
@@ -53,6 +54,7 @@ export default function Modal({ isOpen, onClose, title, children, footer }: Moda
         <div className="mb-4">{children}</div>
         {footer && <div className="flex justify-end gap-2">{footer}</div>}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

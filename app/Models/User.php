@@ -26,4 +26,9 @@ class User extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class, 'user_to_post', 'user_id', 'post_id');
+    }
 }
