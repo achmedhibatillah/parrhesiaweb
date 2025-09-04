@@ -51,6 +51,7 @@
         "framer-motion": "^12.23.12",
         "globals": "^15.14.0",
         "laravel-vite-plugin": "^2.0",
+        "lodash.debounce": "^4.0.8",
         "lucide-react": "^0.475.0",
         "react": "^19.0.0",
         "react-cropper": "^2.3.3",

@@ -40,7 +40,7 @@ export default function PortalLayout({ userdata, pagenow, children }) {
                                 <IconHide hideSidebar={hideSidebar} index={3} />
                             </button>
                         </div>
-                        <p className={`${!hideSidebar ? 'text-yellow-200' : 'text-white'}`}>Parrhesia Colective Academy</p>
+                        <p className={`${!hideSidebar ? 'text-yellow-200' : 'text-white'} duration-300`}>Parrhesia Colective Academy</p>
                     </div>
                 </Container>
             </div>
@@ -48,9 +48,9 @@ export default function PortalLayout({ userdata, pagenow, children }) {
                 <div className="flex w-full overflow-hidden">
                     
                     {/* Sidebar kiri */}
-                    <div className="fixed md:static z-10">
-                        <div className={`transition-all duration-300 ease-in-out ${hideSidebar ? 'w-0' : 'w-[158%] -mt-1 -ms-3 md:ms-0 md:mt-0 md:w-60'} h-[100vh] md:h-auto bg-amber-50 md:bg-white overflow-hidden`}>
-                            <div className="sticky top-0 flex flex-col justify-between pt-1">
+                    <div className={`fixed md:static z-10 ${!hideSidebar && 'me-2'}`}>
+                        <div className={`transition-all duration-300 ease-in-out ${hideSidebar ? 'w-0' : 'w-[158%] -mt-1 -ms-0.5 md:mt-0 md:ms-0 md:w-60'} h-[100vh] md:h-auto bg-amber-50 md:bg-white overflow-hidden`}>
+                            <div className="sticky max-h-[90vh] overflow-y-scroll top-0 flex flex-col justify-between pt-1">
                                 <Sidebar userdata={userdata} pagenow={pagenow} />
                                 <div className="mt-2 flex items-center gap-1 px-3">
                                 <p className="text-sm">©</p>
@@ -62,8 +62,8 @@ export default function PortalLayout({ userdata, pagenow, children }) {
 
                     {/* Konten utama */}
                     <div className="flex-1 transition-all duration-300 ease-in-out -mt-10 px-3 shadow-sm shadow-gray-400 pt-11 pb-3 overflow-auto  max-h-[100vh] relative z-0">
-                        <div className="">
-                        {   children}
+                        <div className="mt-3 md:mt-0 mb-10">
+                        {children}
                         </div>
                     </div>
 

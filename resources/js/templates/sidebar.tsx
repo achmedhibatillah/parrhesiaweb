@@ -142,7 +142,7 @@ function Sidebar({ userdata, pagenow }) {
                     <span className={`${!openMenus && 'whitespace-nowrap overflow-hidden'} text-ellipsis`}>{item.title}</span>
                   </div>
                   <i
-                    className={`fas fa-chevron-right transition-transform duration-300 text-xs ${
+                    className={`fas fa-chevron-right transition-transform duration-300 text-xs me-4 md:me-0 ${
                       isOpen ? "rotate-90" : ""
                     }`}
                   ></i>

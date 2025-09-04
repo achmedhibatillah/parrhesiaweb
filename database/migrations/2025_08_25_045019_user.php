@@ -48,7 +48,7 @@ return new class extends Migration
                 'user_username' => 'achmedhibatillah',
                 'user_fullname' => 'Achmed Hibatillah',
                 'user_pass' => '$2y$12$lEmtCGn0C5w3r3nVFx/S4O96chd3NBYrYV85BqUQM.5ediO0S8KJ.',
-                'role_id' => 'member-user'
+                'role_id' => 'admin-user'
             ],
         ]);
     }

@@ -34,4 +34,9 @@ class UserDt extends Model
         'userdt_pp',
         'userdt_bg',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
 }

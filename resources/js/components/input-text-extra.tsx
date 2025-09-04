@@ -25,7 +25,37 @@ declare module "slate" {
     }
 }
 
-export default function InputTextExtra({ height = 200, userdata }) {      
+type InputTextExtraProps = {
+  name?: string;
+  inputValue?: Descendant[];
+  defaultValue?: Descendant[];
+  onChange?: (value: Descendant[]) => void; 
+  height?: number;
+  userdata: any;
+  disabled?: boolean
+};
+
+export default function InputTextExtra({
+  name,
+  inputValue,
+  defaultValue = [{ type: "paragraph", children: [{ text: "" }] }],
+  onChange,
+  height = 200,
+  userdata,
+  disabled = false
+}: InputTextExtraProps) {      
+
+  const [internalValue, setInternalValue] = useState<Descendant[]>(defaultValue);
+  const currentValue = inputValue ?? internalValue;
+
+  const handleChange = (newValue: Descendant[]) => {
+    if (onChange) {
+      onChange(newValue);
+    }
+    if (value === undefined) {
+      setInternalValue(newValue);
+    }
+  };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -328,13 +358,13 @@ export default function InputTextExtra({ height = 200, userdata }) {
     }, [editor, toggleMark]);      
 
     const languages = [
-        "1c-enterprise","abap","abnf","actionscript","ada","agda","ags-script","alloy","alpine-abuild",
+        ".env", "1c-enterprise","abap","abnf","actionscript","ada","agda","ags-script","alloy","alpine-abuild",
         "ampl","ant-build-system","antlr","apacheconf","apex","api-blueprint","apl","apollo-guidance-computer",
         "applescript","arc","arduino","asciidoc","asn.1","asp","aspectj","assembly","ats","augeas","autohotkey",
-        "autoit","awk","batchfile","befunge","bison","bitbake","blade","blitzbasic","blitzmax","bluespec","boo",
+        "autoit","awk", "bash", "batchfile","befunge","bison","bitbake","blade","blitzbasic","blitzmax","bluespec","boo",
         "brainfuck","brightscript","bro","c","c#","c++","c-objdump","c2hs-haskell","cap'n-proto","cartocss","ceylon",
         "chapel","charity","chuck","cirru","clarion","clean","click","clips","clojure","cmake","cobol","coffeescript",
-        "coldfusion","coldfusion-cfc","collada","common-lisp","component-pascal","cool","coq","cpp-objdump","creole",
+        "coldfusion","coldfusion-cfc","collada", "command", "common-lisp","component-pascal","cool","coq","cpp-objdump","creole",
         "crystal","cson","csound","csound-document","csound-score","css","csv","cuda","cycript","cython","d",
         "d-objdump","darcs-patch","dart","desktop","diff","digital-command-language","dm","dns-zone","dockerfile",
         "dogescript","dtrace","dylan","e","eagle","ebnf","ec","ecere-projects","ecl","eclipse","edn","eiffel","ejs",
@@ -377,7 +407,7 @@ export default function InputTextExtra({ height = 200, userdata }) {
     };
 
     return (
-        <div className="bg-white rounded-lg shadow-sm/30 p-4">
+        <div className={`bg-white rounded-lg shadow-sm/30 p-4 ${disabled ? "brightness-95 pointer-events-none" : ""}`}>
           <div className="mb-3">
               <div className="mb-3 flex gap-2">
               <Button type="button" onMouseDown={e => { e.preventDefault(); setIsModalOpen(true); }} className="w-40 bg-amber-100 hover:bg-amber-200 leading-3">Upload gambar<i className="fas fa-image ms-1"></i></Button>
@@ -397,29 +427,40 @@ export default function InputTextExtra({ height = 200, userdata }) {
               </div>
           </div>
 
-          <Slate editor={editor} initialValue={value} onChange={newValue => { setValue(newValue); ensureLastParagraph(editor); ensureFirstParagraph(); updateHeadingSlugs(); console.log(JSON.stringify(editor.children, null, 2)); }}>
-              <Editable
-              placeholder="Tulis konten di sini..."
-              style={{ direction: "ltr", textAlign: "left", height: height + "px", overflowY: "auto", outline: "none", lineHeight: 1.5 }}
-              renderLeaf={renderLeaf}
-              renderElement={props => (
-                  <RenderSlateElement {...props} editor={editor} activeImagePath={activeImagePath} viewMode="editor" />
-              )}
-              onKeyDown={handleKeyDown}
-              onPaste={event => {
-                  const { selection } = editor;
-                  if (!selection) return;              
-                  const [match] = Editor.nodes(editor, {
-                    match: n => SlateElement.isElement(n) && n.type === "code",
-                  });
-                  if (match) {
-                    event.preventDefault();
-                    const text = event.clipboardData.getData("text/plain");
-                    Editor.insertText(editor, text);
-                  }
-              }}              
-              />
+          <Slate 
+            editor={editor} initialValue={value} 
+            onChange={newValue => { 
+              handleChange(newValue);
+              setValue(newValue); ensureLastParagraph(editor); ensureFirstParagraph(); updateHeadingSlugs(); 
+              console.log(JSON.stringify(editor.children, null, 2));
+            }}
+          >
+            <Editable
+            placeholder="Tulis konten di sini..."
+            style={{ direction: "ltr", textAlign: "left", height: height + "px", overflowY: "auto", outline: "none", lineHeight: 1.5 }}
+            renderLeaf={renderLeaf}
+            renderElement={props => (
+                <RenderSlateElement {...props} editor={editor} activeImagePath={activeImagePath} viewMode="editor" />
+            )}
+            onKeyDown={handleKeyDown}
+            onPaste={event => {
+                const { selection } = editor;
+                if (!selection) return;              
+                const [match] = Editor.nodes(editor, {
+                  match: n => SlateElement.isElement(n) && n.type === "code",
+                });
+                if (match) {
+                  event.preventDefault();
+                  const text = event.clipboardData.getData("text/plain");
+                  Editor.insertText(editor, text);
+                }
+            }}              
+            />
           </Slate>
+
+          { name && (
+            <input type="hidden" name={name} value={JSON.stringify(value)} />
+          )}
 
           <ModalPostUploadImage
             cropMode="flex"

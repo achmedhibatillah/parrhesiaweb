@@ -20,6 +20,10 @@ return new class extends Migration
 
         DB::table('role')->insert([
             [
+                'role_id' => 'admin-user',
+                'role_name' => 'Admin User'
+            ],
+            [
                 'role_id' => 'member-user',
                 'role_name' => 'Member User'
             ],

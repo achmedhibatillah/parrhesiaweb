@@ -7,6 +7,8 @@ use App\Models\Postcategory;
 use App\Models\Postscore;
 use App\Models\User;
 use App\Models\UserDt;
+use App\Models\UserToPost;
+use Generator;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -43,12 +45,37 @@ class PortalController extends Controller
         ]);
     }
 
-    public function publikasi_tambah()
+    public function publikasi_tambah(Request $request)
     {
+        if (!$request->has('id')) {
+            $post_id = GeneratorController::generate_uuid('post', 'post_id');
+            $relation_id = GeneratorController::generate_uuid('user_to_post', 'relation_id');
+            Post::create([
+                'post_id' => $post_id
+            ]);
+            UserToPost::create([
+                'relation_id' => $relation_id,
+                'relation_role' => 'Penulis',
+                'relation_isinitiator' => true,
+                'relation_acc' => true,
+                'user_id' => $this->userdata['user_id'],
+                'post_id' => $post_id
+            ]);
+
+            return redirect()->route('publikasi.tambah', ['id' => $post_id]);
+        }
+
+        if (!Post::where('post_id', $request->id)->exists()) {
+            abort(404);
+        }        
+
+        $postdata = Post::where('post_id', $request->id)->first();
+
         return Inertia::render('portal/publikasi-tambah', [
             'pagenow' => 'publikasi.tambah',
             'userdata' => $this->userdata,
-            'postcategory' => Postcategory::orderBy('postcategory_id')->get()
+            'postcategory' => Postcategory::orderBy('postcategory_id')->get(),
+            'postdata' => $postdata,
         ]);
     }
 }

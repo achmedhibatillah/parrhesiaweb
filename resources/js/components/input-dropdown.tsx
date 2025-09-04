@@ -8,7 +8,9 @@ export default function InputDropdown({
     placeholder = '',
     value,
     onChange,
-    disabled = false
+    disabled = false,
+    onSearchChange,
+    renderOption // opsional: kalau mau custom styling per option
 }) {
     const [search, setSearch] = useState(value?.label || '');
     const [isOpen, setIsOpen] = useState(false);
@@ -51,9 +53,12 @@ export default function InputDropdown({
                     onChange={e => {
                         setSearch(e.target.value);
                         setIsOpen(true);
+
                         if (e.target.value === '') {
-                            onChange?.({ value: '' })
+                            onChange?.({ value: '' });
                         }
+
+                        onSearchChange?.(e.target.value); // trigger search change
                     }}
                     disabled={disabled}
                     className={`block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md shadow-sm
@@ -76,9 +81,9 @@ export default function InputDropdown({
                         <li
                             key={opt.value}
                             onClick={() => handleSelect(opt)}
-                            className="px-3 py-2 cursor-pointer hover:bg-indigo-100"
+                            className="cursor-pointer hover:bg-indigo-100 px-3 py-2"
                         >
-                            {opt.label}
+                            {renderOption ? renderOption(opt) : opt.label}
                         </li>
                     ))}
                 </ul>

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('user_to_post', function (Blueprint $table) {
             $table->uuid('relation_id')->primary();
             $table->string('relation_role', 20);
+            $table->boolean('relation_isinitiator')->default(false);
+            $table->boolean('relation_acc')->default(false);
             $table->uuid('user_id');
             $table->uuid('post_id');
 

@@ -30,10 +30,6 @@ return new class extends Migration
             $table->string('userdt_sinta', 1200)->nullable();
             $table->uuid('userdt_pp')->nullable();
             $table->uuid('userdt_bg')->nullable();
-
-            // $table->foreign('user_id')->references('user_id')->on('user');
-            // $table->foreign('userdt_pp')->references('imageupload_id')->on('imageupload');
-            // $table->foreign('userdt_bg')->references('imageupload_id')->on('imageupload');
         });
 
         DB::table('userdt')->insert([

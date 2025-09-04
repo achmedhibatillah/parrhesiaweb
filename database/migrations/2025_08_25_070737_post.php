@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('post', function (Blueprint $table) {
             $table->uuid('post_id')->primary();
-            $table->string('post_slug', 150)->unique();
-            $table->string('post_title', 120);
+            $table->string('post_slug', 150)->unique()->nullable();
+            $table->string('post_title', 120)->nullable();
             $table->string('post_description', 300)->nullable();
-            $table->longText('post_content');
-            $table->uuid('postcategory_id');
+            $table->longText('post_content')->nullable();
+            $table->string('post_status', 20)->default('draft');
+            $table->uuid('postcategory_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

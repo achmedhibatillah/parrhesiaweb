@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'user';
     protected $primaryKey = 'user_id';
@@ -26,6 +27,11 @@ class User extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public function detail()
+    {
+        return $this->hasOne(UserDt::class, 'user_id', 'user_id');
+    }
 
     public function posts()
     {
